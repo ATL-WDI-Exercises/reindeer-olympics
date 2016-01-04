@@ -1,8 +1,5 @@
 STARTING_COLUMN = 80
-MAX_SCALING_FACTOR = 40.0
 RACE_DURATION = 2503
-FPS = 30.0
-SLEEP_TIME = 1.0 / FPS
 
 class Reindeer
   attr_reader :name, :position, :points
@@ -19,6 +16,8 @@ class Reindeer
     @remaining_rest_time = 0
   end
 
+  private
+
   def flying?
     @remaining_fly_time > 0
   end
@@ -34,6 +33,8 @@ class Reindeer
   def start_resting
     @remaining_rest_time = @rest_time
   end
+
+  public
 
   def status
     if flying?
@@ -70,7 +71,7 @@ end
 
 ###### end of Reindeer
 
-class Printer
+class ReindeerPrinter
 
   def initialize(reindeer)
     @reindeer = reindeer
@@ -95,12 +96,12 @@ class Printer
   end
 end
 
-###### end of Printer
+###### end of ReindeerPrinter
 
-class Olympics
+class ReindeerOlympics
   def initialize(reindeer)
     @reindeer = reindeer
-    @printer = Printer.new(reindeer)
+    @printer = ReindeerPrinter.new(reindeer)
   end
 
   def award_points
@@ -123,10 +124,10 @@ class Olympics
       puts "\nTime: #{t}"
       @reindeer.each do |deer|
         deer.step()
-        sleep 0.001
       end
       award_points
       @printer.print
+      sleep 0.001
     end
 
     race_winner = @reindeer.max_by(&:position)
@@ -147,7 +148,7 @@ class Olympics
   end
 end
 
-Olympics.new([
+ReindeerOlympics.new([
   Reindeer.new('Rudolph', 22,  8, 165),
   Reindeer.new('Cupid',    8, 17, 114),
   Reindeer.new('Prancer', 18,  6, 103),
