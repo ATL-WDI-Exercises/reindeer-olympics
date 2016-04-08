@@ -127,7 +127,7 @@ class ReindeerOlympics
       end
       award_points
       @printer.print
-      sleep 0.001
+      sleep 0.010
     end
 
     race_winner = @reindeer.max_by(&:position)
